@@ -17,6 +17,77 @@
 
 ---
 
+## 👥 User Roles in Detail
+
+**Customer**
+- Registers/logs in with an email + password
+- Browses services filtered by category (e.g. "Plumbing", "Electrical", "Cleaning") and by location
+- Views a provider's profile and existing reviews before booking
+- Creates a booking for a chosen service/provider
+- Tracks booking status (`PENDING` → `CONFIRMED` → completed, via the `BookingStatus` enum)
+- Leaves a review and rating for a provider after a booking
+
+**Provider**
+- Registers separately as a provider (linked to a user account) with category and location
+- Lists the services they offer
+- Views and manages bookings assigned to them (accepts, updates status)
+- Views customer reviews left on their profile
+- Can be blocked/unblocked by an admin
+
+**Admin**
+- Views platform-wide statistics (total users, providers, bookings) via a stats dashboard
+- Manages users — views all registered users, deletes accounts
+- Manages providers — blocks/unblocks a provider's ability to operate
+- Manages service categories — adds new categories for providers/customers to use
+
+Routing on the frontend enforces these roles: a `PrivateRoute` wrapper checks the logged-in user's role and redirects to the correct dashboard, or to `/login` if not authenticated.
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────┐        REST / JSON over HTTP        ┌──────────────────────────┐
+│   React Frontend      │  ─────────────────────────────▶   │   Spring Boot Backend     │
+│   (localhost:3000)    │  ◀─────────────────────────────   │   (localhost:7070)        │
+└─────────────────────┘                                     └──────────────────────────┘
+                                                                        │
+                                                                        ▼
+                                                              ┌──────────────────┐
+                                                              │  H2 (in-memory)   │
+                                                              │  or MySQL         │
+                                                              └──────────────────┘
+```
+
+**Backend layering** follows the classic Spring MVC pattern:
+- **Controller layer** — 7 REST controllers, one per resource (`UserController`, `ProviderController`, `ServiceController`, `CategoryServiceController`, `BookingController`, `ReviewController`, `AdminController`), each exposing endpoints under a distinct base path.
+- **Service layer** — business logic sits here (validation, orchestration). For example, `BookingService` validates that a booking has a customer ID, provider ID, and service name before saving, and stamps it with a creation timestamp and default `PENDING` status.
+- **Repository layer** — Spring Data JPA repositories (`UserRepository`, `BookingRepository`, etc.) extending `JpaRepository`, giving CRUD plus custom query methods (e.g. `findByCustomerId`, `findByProviderId`).
+- **Entities** — `User`, `Provider`, `Service`, `Booking`, `Review`, `CategoryService`, mapped with Jakarta Persistence (`@Entity`) annotations using auto-generated identity primary keys.
+
+**Frontend** is a Create React App project using **React Router v7** for client-side navigation. Each major screen is its own component/page (`Home`, `Login`, `Register`, `CustomerDashboard`, `CustomerServices`, `ProviderRegister`, `ProviderDashboard`, `ProviderBookings`, `ProviderReviews`, `AdminDashboard`, `AdminAddService`, `AdminAddCategory`, `CategoryServiceList`, `AddService`, `AddReview`), paired with its own CSS file. API calls use both `axios` and native `fetch` depending on the component, hitting the backend's REST endpoints directly.
+
+---
+
+## 🗃️ Data Model (Core Entities)
+
+| Entity | Purpose | Key Fields |
+|---|---|---|
+| `User` | Base account for anyone (customer, provider, or admin) | id, name, email, password, role, location |
+| `Provider` | Extended profile for users who offer services | id, linked userId, category, location, block status |
+| `Service` | A service listing offered under a category | id, name, category, pricing/details |
+| `CategoryService` | Master list of service categories admins maintain | id, name |
+| `Booking` | A customer's request to a provider for a service | id, customerId, providerId, serviceName, bookingDate, status |
+| `Review` | Customer feedback tied to a provider | id, providerId, rating/comment |
+
+---
+
+## 🔒 Security & Cross-Origin Setup
+
+The backend uses a minimal `SecurityConfig` that disables CSRF, form login, and HTTP Basic auth (since this is a stateless JSON API, not a server-rendered app), while permitting all requests — authentication/authorization is handled at the application level (via login endpoints and role checks) rather than through Spring Security's filter chain. CORS is explicitly configured to accept requests only from the frontend's origin (`http://localhost:3000`), with all standard HTTP methods allowed and credentials support enabled.
+
+---
+
 ## 🧱 Tech Stack
 
 | Layer          | Technology                                                                 |
@@ -109,10 +180,14 @@ Suggested free-tier hosting:
 
 ---
 
-## 📌 Notes
+## 📌 Notes on Project Assembly
 
-- This project was consolidated into standard Maven (backend) and Create React App (frontend) project layouts for a clean setup experience.
-- Default backend port is `7070` (matches what the frontend expects) — this was fixed for consistency across the codebase.
+The original source was a set of loose files without build tooling. To make it a runnable, cloneable project, the following was added/fixed:
+- Converted the backend into a proper **Maven** project with `pom.xml` (Spring Boot 3.3, Web, Data JPA, Security, H2)
+- Added `application.properties` defaulting to an **in-memory H2 database** so the API runs instantly with no external DB setup, with a commented-out MySQL block ready to switch to
+- Added the **missing `public/` folder** (`index.html`, `manifest.json`, `robots.txt`) the CRA frontend needs to run at all
+- Found and fixed a **port mismatch bug** — most frontend files called the backend on port `7070`, but two files (`ProviderReviews.js`, `AddReview.js`) called port `8080`; everything now consistently uses `7070`
+- Removed a stray empty file and added proper `.gitignore`s so `node_modules`/`target` build artifacts don't get committed
 
 ## 📄 License
 
