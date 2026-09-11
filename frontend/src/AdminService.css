@@ -1,0 +1,64 @@
+.admin-wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#1a0033,#4a148c);
+}
+
+.admin-card{
+  background:#1f0037;
+  padding:40px;
+  border-radius:12px;
+  width:420px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.admin-card h2{
+  color:white;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  color:#ccc;
+  margin-bottom:25px;
+}
+
+.admin-input-group input,
+.admin-input-group textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:6px;
+  background:#3b235f;
+  color:white;
+  font-size:14px;
+}
+
+.admin-input-group textarea{
+  resize:none;
+  height:80px;
+}
+
+.admin-input-group input::placeholder,
+.admin-input-group textarea::placeholder{
+  color:#aaa;
+}
+
+.admin-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(90deg,#a855f7,#ec4899);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.admin-btn:hover{
+  opacity:0.9;
+}

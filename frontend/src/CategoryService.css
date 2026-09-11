@@ -1,0 +1,844 @@
+/* ============================================================
+   CategoryService.css
+   Professional dark theme for CategoryServiceList component
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ── CSS VARIABLES ── */
+:root {
+  --cs-bg:           #0f0f13;
+  --cs-surface:      #16161d;
+  --cs-card:         #1c1c26;
+  --cs-card-hover:   #22222f;
+  --cs-border:       #2a2a3a;
+  --cs-accent:       #7c6dfa;
+  --cs-accent-light: #a598ff;
+  --cs-accent-glow:  rgba(124, 109, 250, 0.18);
+  --cs-gold:         #f0b429;
+  --cs-text:         #f0eff8;
+  --cs-muted:        #8887a0;
+  --cs-success:      #22c55e;
+  --cs-danger:       #ef4444;
+  --cs-gradient:     linear-gradient(135deg, #7c6dfa 0%, #c084fc 100%);
+  --cs-font-display: 'Syne', sans-serif;
+  --cs-font-body:    'DM Sans', sans-serif;
+  --cs-radius-sm:    8px;
+  --cs-radius-md:    12px;
+  --cs-radius-lg:    18px;
+  --cs-radius-xl:    24px;
+}
+
+/* ── RESET ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================
+   ROOT
+============================================================ */
+.cs-root {
+  min-height: 100vh;
+  background: var(--cs-bg);
+  font-family: var(--cs-font-body);
+  color: var(--cs-text);
+  padding-bottom: 80px;
+}
+
+/* ============================================================
+   HERO BANNER
+============================================================ */
+.cs-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 40px 48px;
+  background: linear-gradient(160deg, #1a1a28 0%, #0f0f13 60%);
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.cs-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 80% at 80% 50%,
+    rgba(124, 109, 250, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.cs-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--cs-accent-glow);
+  border: 1px solid rgba(124, 109, 250, 0.3);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--cs-accent-light);
+  margin-bottom: 20px;
+}
+
+.cs-hero-title {
+  font-family: var(--cs-font-display);
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #f0eff8 30%, #a598ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+
+.cs-hero-subtitle {
+  color: var(--cs-muted);
+  font-size: 15px;
+  font-weight: 300;
+  max-width: 460px;
+}
+
+/* ============================================================
+   SORT / FILTER TOOLBAR
+============================================================ */
+.cs-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 40px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--cs-border);
+  background: var(--cs-surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+}
+
+.cs-toolbar-label {
+  font-size: 12px;
+  color: var(--cs-muted);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-right: 4px;
+}
+
+.cs-sort-btn {
+  background: transparent;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-sm);
+  color: var(--cs-muted);
+  font-family: var(--cs-font-body);
+  font-size: 13px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cs-sort-btn:hover,
+.cs-sort-btn.active {
+  background: var(--cs-accent-glow);
+  border-color: var(--cs-accent);
+  color: var(--cs-accent-light);
+}
+
+.cs-count-chip {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--cs-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--cs-border);
+}
+
+/* ============================================================
+   SERVICE GRID
+============================================================ */
+.cs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+  padding: 36px 40px;
+}
+
+/* ============================================================
+   SERVICE CARD
+============================================================ */
+.cs-card {
+  background: var(--cs-card);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+  transition:
+    transform      0.25s ease,
+    box-shadow     0.25s ease,
+    border-color   0.25s ease,
+    background     0.25s ease;
+}
+
+.cs-card:hover {
+  transform: translateY(-5px);
+  background: var(--cs-card-hover);
+  border-color: rgba(124, 109, 250, 0.4);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(124, 109, 250, 0.15);
+}
+
+/* Gradient top accent — reveals on hover */
+.cs-card-glow {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 3px;
+  background: var(--cs-gradient);
+  border-radius: var(--cs-radius-lg) var(--cs-radius-lg) 0 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cs-card:hover .cs-card-glow {
+  opacity: 1;
+}
+
+/* Card image area */
+.cs-card-img {
+  height: 160px;
+  background: linear-gradient(135deg, #1e1e2e, #2a2240);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cs-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(28, 28, 38, 0.8) 100%);
+}
+
+/* Card body */
+.cs-card-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cs-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.cs-card-name {
+  font-family: var(--cs-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--cs-text);
+}
+
+.cs-price-tag {
+  background: var(--cs-accent-glow);
+  border: 1px solid rgba(124, 109, 250, 0.35);
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-family: var(--cs-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cs-accent-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cs-desc {
+  font-size: 13.5px;
+  color: var(--cs-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* Meta chips row */
+.cs-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.cs-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--cs-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-sm);
+  padding: 4px 10px;
+}
+
+.cs-rating {
+  color: var(--cs-gold);
+  font-size: 12px;
+}
+
+/* Card footer */
+.cs-card-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--cs-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cs-provider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-provider-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--cs-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cs-provider-name {
+  font-size: 12px;
+  color: var(--cs-muted);
+}
+
+.cs-book-btn {
+  background: var(--cs-gradient);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: var(--cs-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 18px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.cs-book-btn:hover  { opacity: 0.88; transform: scale(1.03); }
+.cs-book-btn:active { transform: scale(0.97); }
+
+/* ============================================================
+   LOADING / EMPTY STATES
+============================================================ */
+.cs-center {
+  text-align: center;
+  padding: 80px 40px;
+  color: var(--cs-muted);
+}
+
+.cs-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--cs-border);
+  border-top-color: var(--cs-accent);
+  border-radius: 50%;
+  animation: cs-spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes cs-spin {
+  to { transform: rotate(360deg); }
+}
+
+.cs-empty-icon  { font-size: 48px; margin-bottom: 12px; }
+.cs-empty-title { font-size: 16px; color: var(--cs-text); margin-bottom: 6px; }
+.cs-empty-sub   { font-size: 13px; }
+
+/* ============================================================
+   MODAL OVERLAY
+============================================================ */
+.cs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: cs-fade-in 0.2s ease;
+}
+
+@keyframes cs-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================
+   MODAL BOX
+============================================================ */
+.cs-modal {
+  background: #1a1a24;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: cs-slide-up 0.3s cubic-bezier(0.22, 0.68, 0, 1.2);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(124, 109, 250, 0.15);
+}
+
+@keyframes cs-slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Custom scrollbar */
+.cs-modal::-webkit-scrollbar       { width: 6px; }
+.cs-modal::-webkit-scrollbar-track { background: transparent; }
+.cs-modal::-webkit-scrollbar-thumb { background: var(--cs-border); border-radius: 3px; }
+
+/* Modal header */
+.cs-modal-header {
+  padding: 28px 28px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cs-modal-title {
+  font-family: var(--cs-font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--cs-text);
+  line-height: 1.2;
+}
+
+.cs-modal-subtitle {
+  font-size: 13px;
+  color: var(--cs-muted);
+  margin-top: 4px;
+}
+
+.cs-modal-close {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--cs-border);
+  border-radius: 50%;
+  color: var(--cs-muted);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 12px;
+  transition: all 0.2s ease;
+}
+
+.cs-modal-close:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--cs-danger);
+  color: var(--cs-danger);
+}
+
+/* Service summary bar */
+.cs-modal-service-bar {
+  margin: 20px 28px;
+  background: var(--cs-accent-glow);
+  border: 1px solid rgba(124, 109, 250, 0.2);
+  border-radius: var(--cs-radius-md);
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cs-modal-service-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cs-text);
+}
+
+.cs-modal-service-meta {
+  font-size: 12px;
+  color: var(--cs-muted);
+  margin-top: 2px;
+}
+
+.cs-modal-service-price {
+  font-family: var(--cs-font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--cs-accent-light);
+}
+
+/* Modal body */
+.cs-modal-body {
+  padding: 0 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Section label */
+.cs-section-label {
+  font-family: var(--cs-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cs-accent);
+  margin-bottom: 10px;
+}
+
+/* ── DATE PICKER ── */
+.cs-date-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.cs-date-option {
+  background: var(--cs-card);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.cs-date-option:hover {
+  border-color: rgba(124, 109, 250, 0.4);
+  background: var(--cs-accent-glow);
+}
+
+.cs-date-option.selected {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent-glow);
+}
+
+.cs-date-option-day {
+  font-size: 11px;
+  color: var(--cs-muted);
+  margin-bottom: 3px;
+}
+
+.cs-date-option-date {
+  font-family: var(--cs-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cs-text);
+}
+
+/* ── TIME SLOTS ── */
+.cs-time-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.cs-time-slot {
+  background: var(--cs-card);
+  border: 1px solid var(--cs-border);
+  border-radius: 10px;
+  padding: 9px 6px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--cs-muted);
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.cs-time-slot:hover {
+  border-color: rgba(124, 109, 250, 0.4);
+  color: var(--cs-text);
+}
+
+.cs-time-slot.selected {
+  background: var(--cs-gradient);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+}
+
+.cs-time-slot.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── FORM FIELDS ── */
+.cs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cs-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-label .req {
+  color: var(--cs-accent);
+}
+
+.cs-input,
+.cs-textarea,
+.cs-select {
+  background: var(--cs-card);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  color: var(--cs-text);
+  font-family: var(--cs-font-body);
+  font-size: 14px;
+  padding: 13px 16px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-input:focus,
+.cs-textarea:focus,
+.cs-select:focus {
+  border-color: var(--cs-accent);
+  box-shadow: 0 0 0 3px rgba(124, 109, 250, 0.15);
+}
+
+.cs-input::placeholder,
+.cs-textarea::placeholder {
+  color: #55546a;
+}
+
+.cs-textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.cs-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238887a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+
+.cs-select option {
+  background: var(--cs-card);
+  color: var(--cs-text);
+}
+
+/* ── ORDER SUMMARY ── */
+.cs-summary-box {
+  background: var(--cs-card);
+  border: 1px solid var(--cs-border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.cs-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 13.5px;
+  color: var(--cs-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cs-summary-row:last-child {
+  border-bottom: none;
+}
+
+.cs-summary-row.total {
+  padding-top: 10px;
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--cs-text);
+}
+
+.cs-summary-row.total span:last-child {
+  font-family: var(--cs-font-display);
+  font-size: 17px;
+  color: var(--cs-accent-light);
+}
+
+/* ── MODAL ACTIONS ── */
+.cs-modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.cs-cancel-btn {
+  background: transparent;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  color: var(--cs-muted);
+  font-family: var(--cs-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cs-cancel-btn:hover {
+  border-color: var(--cs-danger);
+  color: var(--cs-danger);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.cs-confirm-btn {
+  background: var(--cs-gradient);
+  border: none;
+  border-radius: var(--cs-radius-md);
+  color: #fff;
+  font-family: var(--cs-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.cs-confirm-btn:hover   { opacity: 0.88; }
+.cs-confirm-btn:active  { transform: scale(0.98); }
+.cs-confirm-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   SUCCESS SCREEN
+============================================================ */
+.cs-success {
+  text-align: center;
+  padding: 40px 28px;
+  animation: cs-fade-in 0.4s ease;
+}
+
+.cs-success-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.1));
+  border: 2px solid var(--cs-success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin: 0 auto 20px;
+}
+
+.cs-success-title {
+  font-family: var(--cs-font-display);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--cs-text);
+}
+
+.cs-success-msg {
+  font-size: 14px;
+  color: var(--cs-muted);
+  line-height: 1.7;
+}
+
+.cs-success-ref {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--cs-accent);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.cs-done-btn {
+  margin-top: 24px;
+  background: var(--cs-gradient);
+  border: none;
+  border-radius: var(--cs-radius-md);
+  color: #fff;
+  font-family: var(--cs-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 13px 32px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s ease;
+}
+
+.cs-done-btn:hover { opacity: 0.85; }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+  .cs-hero      { padding: 36px 20px 30px; }
+  .cs-toolbar   { padding: 14px 20px; gap: 8px; }
+  .cs-grid      { padding: 24px 20px; gap: 16px; grid-template-columns: 1fr; }
+
+  .cs-date-grid { grid-template-columns: repeat(3, 1fr); }
+  .cs-time-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .cs-modal-header,
+  .cs-modal-body    { padding-left: 20px; padding-right: 20px; }
+  .cs-modal-service-bar { margin-left: 20px; margin-right: 20px; }
+
+  .cs-modal-actions { grid-template-columns: 1fr; }
+  .cs-cancel-btn    { order: 2; }
+  .cs-confirm-btn   { order: 1; }
+}
+
+@media (max-width: 480px) {
+  .cs-date-grid { grid-template-columns: repeat(2, 1fr); }
+  .cs-time-grid { grid-template-columns: repeat(3, 1fr); }
+  .cs-sort-btn  { font-size: 12px; padding: 6px 10px; }
+}
